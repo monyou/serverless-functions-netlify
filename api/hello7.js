@@ -1,6 +1,8 @@
-export async function handler(event, context) {
+const handler = async (event, context) => {
   return {
     statusCode: 200,
     body: JSON.stringify({ message: "Hello World 7" }),
   };
-}
+};
+
+export default handler;
