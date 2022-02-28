@@ -1,8 +1,6 @@
-const handler = async (event, context) => {
+export async function handler(event, context) {
   return {
     statusCode: 200,
     message: "Hello World 6",
   };
-};
-
-export default handler;
+}
