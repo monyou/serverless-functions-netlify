@@ -1,7 +1,3 @@
 [build]
     functions = "api"
     publish = "client"
-[[redirects]]
-    from = "api/*"
-    to = ".netlify/functions/:splat"
-    status = 200
