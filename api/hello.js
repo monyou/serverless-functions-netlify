@@ -7,4 +7,4 @@ const handler = async (event, context) => {
   };
 };
 
-export default { handler };
+module.exports = { handler };
