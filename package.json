@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/monyou/serverless-functions-netlify/issues"
   },
-  "homepage": "https://github.com/monyou/serverless-functions-netlify#readme"
+  "homepage": "https://github.com/monyou/serverless-functions-netlify#readme",
+  "dependencies": {
+    "nodemailer": "^6.7.2"
+  }
 }
