@@ -11,6 +11,6 @@ const transporter = nodemailer.createTransport({
 exports.handler = async (event, context) => {
   return {
     statusCode: 200,
-    message: "Hello World",
+    body: JSON.stringify({ message: "Hello World" }),
   };
 };
