@@ -8,9 +8,17 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.handler = async (event, context) => {
+export async function handler(event, context) {
+  await new Promise((resolve) => {
+    transporter.sendMail({ to: "monyou@abv.bg", text: "Hello World!" }, () =>
+      resolve()
+    );
+  });
+
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: "Hello World" }),
+    body: JSON.stringify({
+      message: "Hello World! Message sent successfully!",
+    }),
   };
-};
+}
