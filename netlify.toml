@@ -5,3 +5,7 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   force = true
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
