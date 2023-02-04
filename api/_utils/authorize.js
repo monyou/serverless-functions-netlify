@@ -4,11 +4,14 @@ const authorize = (db, body) => {
   let result = false;
 
   db.connect();
-  db.query(``, (error, results) => {
-    if (error) throw error;
+  db.query(
+    `SELECT token FROM vsg_pp_user WHERE email like '${body.email}' AND password like '${body.password}'`,
+    (error, results) => {
+      if (error) throw error;
 
-    result = !!results.length;
-  });
+      result = !!results.length;
+    }
+  );
   db.end();
 
   return result;

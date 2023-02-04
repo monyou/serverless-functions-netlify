@@ -2,9 +2,11 @@ const db = require("./_utils/dbConnection");
 const authorize = require("./_utils/authorize");
 
 const handler = async (event, context) => {
-  if (event.httpMethod === "POST") {
+  if (event.httpMethod === "GET") {
     try {
       const body = JSON.parse(event.body);
+      body.email = "smechkov@vsgbg.com";
+      body.password = "12345";
 
       if (!authorize(db, body))
         return {
@@ -21,7 +23,7 @@ const handler = async (event, context) => {
 
       db.connect();
       db.query(
-        `SELECT token FROM vsg_pp_users WHERE email = '${body.email}' AND password = '${body.password}'`,
+        `SELECT token FROM vsg_pp_user WHERE email like '${body.email}'`,
         (error, results) => {
           if (error) throw error;
 
