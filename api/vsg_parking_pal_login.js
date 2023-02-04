@@ -2,11 +2,9 @@ const db = require("./_utils/dbConnection");
 const authorize = require("./_utils/authorize");
 
 const handler = async (event, context) => {
-  if (event.httpMethod === "GET") {
+  if (event.httpMethod === "POST") {
     try {
       const body = JSON.parse(event.body);
-      body.email = "smechkov@vsgbg.com";
-      body.password = "12345";
 
       if (!authorize(db, body))
         return {
