@@ -1,20 +1,15 @@
 const authorize = (db, body) => {
-  if (!body?.email || !body?.password) return false;
+  return new Promise((resolve, reject) => {
+    if (!body?.email || !body?.password) resolve(false);
 
-  let result = false;
-
-  db.connect();
-  db.query(
-    `SELECT token FROM vsg_pp_user WHERE email like '${body.email}' AND password like '${body.password}'`,
-    (error, results) => {
-      if (error) throw error;
-
-      result = !!results.length;
-    }
-  );
-  db.end();
-
-  return result;
+    db.query(
+      `SELECT id FROM vsg_pp_user WHERE email like '${body.email}' AND password like '${body.password}'`,
+      (error, results) => {
+        if (error) return reject(error);
+        resolve(!!results.length);
+      }
+    );
+  });
 };
 
 module.exports = authorize;

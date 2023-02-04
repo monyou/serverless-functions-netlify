@@ -4,9 +4,9 @@ const authorize = require("./_utils/authorize");
 const handler = async (event, context) => {
   if (event.httpMethod === "POST") {
     try {
-      const body = JSON.parse(event.body);
+      const body = JSON.parse(event.body || "{}");
 
-      if (!authorize(db, body))
+      if (!(await authorize(db, body)).catch())
         return {
           statusCode: 401,
           body: JSON.stringify({
@@ -19,16 +19,17 @@ const handler = async (event, context) => {
         message: "OK",
       };
 
-      db.connect();
-      db.query(
-        `SELECT token FROM vsg_pp_user WHERE email like '${body.email}'`,
-        (error, results) => {
-          if (error) throw error;
+      await new Promise((resolve, reject) => {
+        db.query(
+          `SELECT token FROM vsg_pp_user WHERE email like '${body.email}'`,
+          (error, results) => {
+            if (error) return reject(error);
 
-          result.body = JSON.stringify({ token: results[0].token });
-        }
-      );
-      db.end();
+            result.body = JSON.stringify({ token: results[0].token });
+            resolve();
+          }
+        );
+      }).catch();
 
       return result;
     } catch (error) {
@@ -36,7 +37,6 @@ const handler = async (event, context) => {
         statusCode: 500,
         body: JSON.stringify({
           message: "Internal Server Error",
-          error,
         }),
       };
     }
