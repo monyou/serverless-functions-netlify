@@ -3,11 +3,7 @@ const axios = require("axios");
 const handler = async (event) => {
   if (event.httpMethod === "GET") {
     if (event.headers["x-token"] !== process.env.BOB_PUBLIC_KEY) {
-      console.log(
-        "Missing x-token header!",
-        event.headers["x-token"],
-        event.headers.origin
-      );
+      console.log("Missing x-token header", event);
       return {
         statusCode: 403,
         body: JSON.stringify({
@@ -31,7 +27,7 @@ const handler = async (event) => {
         email: employee.email,
       }));
 
-      console.log("Success!", event.headers.origin);
+      console.log("Success", event);
       return {
         statusCode: 200,
         body: JSON.stringify({
@@ -39,7 +35,7 @@ const handler = async (event) => {
         }),
       };
     } catch (error) {
-      console.log("App Error: ", error, event.headers.origin);
+      console.log("App Error: ", error, event);
       return {
         statusCode: 500,
         body: JSON.stringify({
@@ -49,14 +45,9 @@ const handler = async (event) => {
       };
     }
   } else {
-    console.log("Wrong method used: ", event.httpMethod, event.headers.origin);
+    console.log("Wrong method used", event);
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "*",
-        "Access-Control-Allow-Headers": "*",
-      },
     };
   }
 };
