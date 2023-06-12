@@ -5,6 +5,10 @@ const handler = async (event, context) => {
     if (event.headers["x-token"] !== process.env.BOB_PUBLIC_KEY)
       return {
         statusCode: 403,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
         body: JSON.stringify({
           message: "Not authorized",
         }),
@@ -27,6 +31,10 @@ const handler = async (event, context) => {
 
       return {
         statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
         body: JSON.stringify({
           employees,
         }),
@@ -35,6 +43,10 @@ const handler = async (event, context) => {
       console.log(error);
       return {
         statusCode: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
         body: JSON.stringify({
           message: "Internal Server Error",
           error,
@@ -44,6 +56,10 @@ const handler = async (event, context) => {
   } else {
     return {
       statusCode: 405,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
       body: JSON.stringify({
         message: "Method not allowed",
       }),
