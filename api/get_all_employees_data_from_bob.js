@@ -1,5 +1,6 @@
 const handler = async (event, context) => {
   if (event.httpMethod === "GET") {
+    console.log(event);
     if (event.headers["x-token"] !== process.env.BOB_PUBLIC_KEY)
       return {
         statusCode: 403,
