@@ -1,14 +1,21 @@
 const axios = require("axios");
 
-const handler = async (event, context) => {
+const handler = async (event) => {
+  console.log(event);
   if (event.httpMethod === "GET") {
-    if (event.headers["x-token"] !== process.env.BOB_PUBLIC_KEY)
+    if (event.headers["x-token"] !== process.env.BOB_PUBLIC_KEY) {
+      console.log(
+        "Missing x-token header!",
+        event.headers["x-token"],
+        event.origin
+      );
       return {
         statusCode: 403,
         body: JSON.stringify({
           message: "Not authorized",
         }),
       };
+    }
 
     try {
       const { data } = await axios.get("https://api.hibob.com/v1/people", {
@@ -25,6 +32,7 @@ const handler = async (event, context) => {
         email: employee.email,
       }));
 
+      console.log("Success!", event.origin);
       return {
         statusCode: 200,
         body: JSON.stringify({
@@ -32,7 +40,7 @@ const handler = async (event, context) => {
         }),
       };
     } catch (error) {
-      console.log(error);
+      console.log("App Error: ", error, event.origin);
       return {
         statusCode: 500,
         body: JSON.stringify({
@@ -42,6 +50,7 @@ const handler = async (event, context) => {
       };
     }
   } else {
+    console.log("Wrong method used: ", event.httpMethod, event.origin);
     return {
       statusCode: 405,
       body: JSON.stringify({
