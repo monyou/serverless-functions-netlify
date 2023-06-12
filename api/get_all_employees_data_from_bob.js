@@ -6,6 +6,12 @@ const handler = async (event) => {
       console.log("Missing x-token header", event);
       return {
         statusCode: 403,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Allow-Headers": "*",
+        },
         body: JSON.stringify({
           message: "Not authorized",
         }),
@@ -30,6 +36,12 @@ const handler = async (event) => {
       console.log("Success", event);
       return {
         statusCode: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Allow-Headers": "*",
+        },
         body: JSON.stringify({
           employees,
         }),
@@ -38,6 +50,12 @@ const handler = async (event) => {
       console.log("App Error: ", error, event);
       return {
         statusCode: 500,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Allow-Headers": "*",
+        },
         body: JSON.stringify({
           message: "Internal Server Error",
           error,
@@ -48,6 +66,12 @@ const handler = async (event) => {
     console.log("Wrong method used", event);
     return {
       statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
     };
   }
 };

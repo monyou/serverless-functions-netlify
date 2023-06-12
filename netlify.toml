@@ -1,12 +1,10 @@
 [build]
-    functions = "api"
-    publish = "client"
+  functions = "api"
+  publish = "client"
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
-  status = 301
   force = true
-  headers = {Access-Control-Allow-Origin = "*"}
 [[headers]]
   for = "/*"
   [headers.values]
