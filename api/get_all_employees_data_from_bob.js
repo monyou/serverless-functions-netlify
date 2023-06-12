@@ -1,6 +1,7 @@
+const axios = require("axios");
+
 const handler = async (event, context) => {
   if (event.httpMethod === "GET") {
-    console.log(event);
     if (event.headers["x-token"] !== process.env.BOB_PUBLIC_KEY)
       return {
         statusCode: 403,
@@ -10,15 +11,13 @@ const handler = async (event, context) => {
       };
 
     try {
-      const response = await fetch("https://api.hibob.com/v1/people", {
+      const { data } = await axios.get("https://api.hibob.com/v1/people", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: process.env.BOB_API_KEY,
         },
       });
-      console.log(response);
-      const data = await response.json();
 
       const employees = data.employees.map((employee) => ({
         name: employee.displayName,
