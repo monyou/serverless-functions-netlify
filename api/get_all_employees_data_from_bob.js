@@ -17,6 +17,7 @@ const handler = async (event, context) => {
           Authorization: process.env.BOB_API_KEY,
         },
       });
+      console.log(response);
       const data = await response.json();
 
       const employees = data.employees.map((employee) => ({
@@ -32,6 +33,7 @@ const handler = async (event, context) => {
         }),
       };
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 500,
         body: JSON.stringify({
